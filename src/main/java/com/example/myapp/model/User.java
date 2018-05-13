@@ -9,11 +9,18 @@ import javax.persistence.Id;
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	private String username;
 	private String password;
 	private String firstName;
 	private String lastName;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId() {
+		this.id = id;
+	}
 	public String getUsername() {
 		return username;
 	}

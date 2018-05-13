@@ -1,23 +1,24 @@
 (function () {
 
+	var tbody;
+    var template;
     jQuery(main);
 
     function main() {
-        var h1 = jQuery('h1#title');
-        h1.css('color', 'red');
+        tbody = $('tbody')
+        template = jQuery('.template');
 
-        var tr = $('.template');
+        var promise = fetch("http://localhost:8080/api/user");
+        promise.then(function (response) {
+            return response.json();
+        }).then(renderUsers);
+    }
 
-        var users = [
-            {username: 'bob'},
-            {username: 'charlie'}
-        ];
-        var tbody = $('tbody');
-
+    function renderUsers(users){
         for(var i=0; i<users.length; i++) {
             var user = users[i];
             console.log(user);
-            var clone = tr.clone();
+            var clone = template.clone();
             clone.find('.username').html(user.username);
             tbody.append(clone);
         }
