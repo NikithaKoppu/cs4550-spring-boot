@@ -2,6 +2,7 @@
 
 	var tbody;
     var template;
+    var userService = new UserServiceClient();
     jQuery(main);
 
     function main() {
@@ -9,10 +10,11 @@
         template = jQuery('.template');
         $('#createUser').click(createUser);
 
-        var promise = fetch("http://localhost:8080/api/user");
-        promise.then(function (response) {
-            return response.json();
-        }).then(renderUsers);
+        findAllUsers();
+    }
+
+    function findAllUsers() {
+        userService.findAllUsers().then(renderUsers);
     }
 
     function createUser() {
@@ -29,22 +31,34 @@
             lastName: lastName
         };
 
-        fetch("http://localhost:8080/api/user", {
-            method: 'post',
-            body: JSON.stringify(user),
-            headers: {
-                'content-type': 'application/json'
-            }
-        })
+        userService.createUser(user)
+            .then(findAllUsers);
     }
 
     function renderUsers(users){
+        tbody.empty();
         for(var i=0; i<users.length; i++) {
             var user = users[i];
-            console.log(user);
             var clone = template.clone();
-            clone.find('.username').html(user.username);
+            clone.attr('id', user.id);
+
+            clone.find('.delete').click(deleteUser);
+            clone.find('.edit').click(editUser);
+            clone.find('.username')
+                .html(user.username);
             tbody.append(clone);
         }
     }
+
+    function deleteUser(event) {
+        var deleteBtn = $(event.currentTarget);
+        var userID = deleteBtn.parent().parent().attr('id');
+        userService.deleteUser(userID)
+            .then(findAllUsers);
+    }
+
+    function editUser(event) {
+        console.log('editUser')
+    }
+
 })();

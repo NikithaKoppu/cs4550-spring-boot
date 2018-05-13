@@ -9,7 +9,7 @@
 			src="https://code.jquery.com/jquery-3.3.1.min.js"
 			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			crossorigin="anonymous"></script>
-
+	<script src="../../services/user.service.client.js"></script>
 	<script src="user-admin.controller.client.js"></script>
 </head>
 <body>
@@ -32,18 +32,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="template">
+		<tr id="" class="template">
 			<td class="username">alice</td>
 			<td>***</td>
 			<td>Alice</td>
 			<td>Wonder</td>
-			<td><button>Edit</button></td>
-			<th><button class="btn btn-danger">Delete</button></th>
+			<th><button class="edit btn">Edit</button></th>
+			<th><button class="delete btn btn-danger">Delete</button></th>
 		</tr>
 	</tbody>
 	<tfoot></tfoot>
 </table>
 </div>
-
 </body>
 </html>
