@@ -1,7 +1,10 @@
 package com.example.myapp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,9 +33,42 @@ public class UserService {
 		return repository.save(user);
 	}
 	
+	@PostMapping("/api/register")
+	public User register(@RequestBody User user, HttpSession session) {
+		if(repository.findUserByUsername(user.getUsername()) == null) {
+			createUser(user);
+			session.setAttribute("currentUser", user);
+		}
+		return user;
+	}
+	
+	@GetMapping("/api.profile")
+	public User profile(HttpSession session) {
+		User currentUser = (User) session.getAttribute("currentUser");
+		return currentUser;
+	}
+	
+	@PostMapping("/api/logout")
+	public void logout(HttpSession session) {
+		session.invalidate();
+	}
+ 	
 	@PostMapping("/api/login")
-	public Iterable<User> login(@RequestBody User user) {
-		return repository.findUserByCredentials(user.getUsername(), user.getPassword());
+	public User login(@RequestBody User user, HttpSession session) {
+		if(repository.findUserByCredentials(user.getUsername(), user.getPassword()) != null) {
+			session.setAttribute("currentUser", user);
+			return user;
+		}
+		return null;
+	}
+	
+	@GetMapping("/api/register")
+	public User findUserByUsername(@PathVariable("username") String username) {
+		Optional<User> data = repository.findUserByUsername(username);
+		 if(data.isPresent()) {
+			 return data.get();
+		 }
+		 return null;
 	}
 	
 	@GetMapping("/api/user")
