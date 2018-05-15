@@ -8,7 +8,6 @@
         $tbody = $('tbody')
         $userRowTemplate = jQuery('.template');
         $('#create').click(createUser);
-        //$('#search').click(findUserById)
         findAllUsers();
     }
     
