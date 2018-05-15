@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+	<script
+			src="https://code.jquery.com/jquery-3.3.1.min.js"
+			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			crossorigin="anonymous"></script>
+	<script src="../../services/user.service.client.js"></script>
+	<script src="user-admin.controller.client.js"></script>
+	<script type="text/javascript"></script>
+	
+</head>
+<body>
+<div class="container">
+<h1 id="title">User Admin</h1>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Username</th>
+			<th>Password</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Role</th> 
+			<th>&nbsp;</th>
+		</tr>
+		<tr class="wbdv-form">
+			<th><input id="usernameFld" class="form-control" placeholder="Username"/></th>
+			<th><input id="passwordFld" class="form-control" type="Password"/></th>
+			<th><input id="firstNameFld" class="form-control" placeholder="First Name"/></th>
+			<th><input id="lastNameFld" class="form-control" placeholder="Last Name"/></th>
+			<th><select id="roleFld" class="form-control">
+					<option value="FACULTY">Faculty</option>
+					<option value="STUDENT">Student</option>
+				</select></th>
+			<th><span class="float-right" style="white-space: nowrap">
+      			<i class="fa-2x fa fa-search wbdv-search"></i> 
+      			<i class="fa-2x fa fa-plus wbdv-create"></i> 
+      			<i class="fa-2x fa fa-check wbdv-update"></i>
+  				</span></th>
+		</tr>
+	</thead>
+	<tbody class="wbdv-tbody">
+		<tr id="" class="template">
+			<td class="username">alice</td>
+			<td class="password">***</td>
+			<td class="first-name">Alice</td>
+			<td class="last-name">Wonder</td>
+			<td class="role">FACULTY</td>
+			<td class="actions">
+       			<span class="float-right">
+         		 	<i id="remove" class="fa-2x fa fa-times wbdv-remove"></i>
+          			<i id="edit" class="fa-2x fa fa-pencil wbdv-edit"></i>
+        		</span>
+      </td>
+
+		</tr>
+	</tbody>
+	<tfoot></tfoot>
+</table>
+</div>
+</body>
+</html>
