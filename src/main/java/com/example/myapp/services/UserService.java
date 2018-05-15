@@ -41,7 +41,7 @@ public class UserService {
 	}
 	
 	@GetMapping("/api/user/{userId}")
-	public User findByUserId(@PathVariable("userId") int userId) {
+	public User findUserById(@PathVariable("userId") int userId) {
 		 Optional<User> data = repository.findById(userId);
 		 if(data.isPresent()) {
 			 return data.get();
