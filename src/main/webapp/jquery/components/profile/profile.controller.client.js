@@ -4,8 +4,6 @@
     var $email;
     var $dob;
     var $role;
-    $("#logoutBtn").click(logout);
-    $("#updateBtn").click(updateProfile);
     var userService = new UserServiceClient();
 
     $(init);
@@ -17,19 +15,25 @@
         $dob = $("#dateOfBirthFld");
         $role = $("#roleFld");
 
+        $("#logoutBtn").click(logout);
+        $("#updateBtn").click(updateUser);
+
         findUserById(12);
     }
 
-    function updateProfile() {
+    function updateUser() {
         var user = {
-            username: $("#usernameFld").val(),
-            phone: $("#phoneFld").val(),
-            email: $("#emailFld").val(),
+            username: $username.val(),
+            phone: $phone.val(),
+            email: $email.val(),
             dateOfBirth: $("#dateOfBirthFld").val(),
             role: $("#roleFld").val()
         };
+        console.log(user);
 
-        userService.updateUser(12, user).then(success);
+        userService.updateUser(12, user).then(function(response){
+            console.log(response);
+        });
     }
 
     function logout() {
@@ -53,7 +57,7 @@
     }
 
     function renderUser(user) {
-        console.log(user);
+        //console.log(user);
         $username.val(user.username);
         $phone.val(user.phone);
         $email.val(user.email);

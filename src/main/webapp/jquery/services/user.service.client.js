@@ -18,7 +18,7 @@ function UserServiceClient() {
 
     function login(username, password) {
         return fetch(self.loginURL, {
-            method: 'POST',
+            method: 'GET',
             body: JSON.stringify({username: username, password: password}),
             headers: {
                 'content-type': 'application/json'
@@ -32,6 +32,15 @@ function UserServiceClient() {
             body: JSON.stringify({username: username, password: password}),
             headers: {
                 'content-type': 'application/json'
+            }
+        }).then(function(response) {
+            if(response.bodyUsed) {
+                console.log("I am responding to u");
+                return response.json();
+            }
+            else{
+                console.log('yert');
+                return null;
             }
         });
     }
@@ -70,27 +79,8 @@ function UserServiceClient() {
            });
    }
 
-    function updateProfile(userId, user) {
-        console.log("starts");
-        return fetch(self.profileURL + '/' + userId, {
-            method: 'PUT',
-            body: JSON.stringify(user),
-            headers: {
-                'content-type': 'application/json'
-            }
-        }).then(function(response) {
-            if(response.bodyUsed) {
-                return response.json();
-            }
-            else{
-                return null;
-            }
-
-        });
-    }
-
     function updateUser(userId, user) {
-    	console.log(user);
+    	console.log("I AM HERE IN THE CLIENT SERVICE");
        return fetch(self.url + '/' + userId, {
            method: 'PUT',
            body: JSON.stringify(user),
@@ -99,9 +89,11 @@ function UserServiceClient() {
            }
        }).then(function(response) {
            if(response.bodyUsed) {
+               console.log("I am responding to u");
                return response.json();
            }
            else{
+               console.log('yert');
                return null;
            }
        });

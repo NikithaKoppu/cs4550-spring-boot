@@ -2,17 +2,17 @@
     var $usernameFld, $passwordFld, $verifyPasswordFld;
     var $registerBtn;
     var userService = new UserServiceClient();
-    $(main);
+    $("#registerBtn").click(register);
 
     function main() {
-    	$usernameFld = $("#usernameFld");
-    	$passwordFld = $("#passwordFld");
-    	$verifyPasswordFld = $("#verifyPasswordFld");
-    	$registerBtn = $("#registerBtn").click(register);
-
+    	$usernameFld = $("#usernameFld").val();
+    	$passwordFld = $("#passwordFld").val();
+    	$verifyPasswordFld = $("#verifyPasswordFld").val();
     }
+
     function register() {
-        if($passwordFld.toString() == $verifyPasswordFld.toString()
+        $(main);
+        if($passwordFld == $verifyPasswordFld
             && userService.register($usernameFld, $passwordFld) != null) {
         	window.location = "../profile/profile.template.client.html";
         }
