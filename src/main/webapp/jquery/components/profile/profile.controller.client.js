@@ -1,28 +1,40 @@
 (function() {
-    $(init);
-
-    var $staticEmail;
-    var $firstName;
-    var $lastName;
-    var $updateBtn;
+    var $username;
+    var $phone;
+    var $email;
+    var $dob;
+    var $role;
+    $("#logoutBtn").click(logout);
+    $("#updateBtn").click(updateProfile);
     var userService = new UserServiceClient();
 
+    $(init);
+
     function init() {
-        $staticEmail = $("#staticEmail");
-        $firstName = $("#firstName");
-        $lastName = $("#lastName");
-        $updateBtn = $("#updateBtn").click(updateUser);
+        $username = $("#usernameFld");
+        $phone = $("#phoneFld");
+        $email = $("#emailFld");
+        $dob = $("#dateOfBirthFld");
+        $role = $("#roleFld");
 
         findUserById(12);
     }
 
-    function updateUser() {
+    function updateProfile() {
         var user = {
-            firstName: $firstName.val(),
-            lastName: $lastName.val()
+            username: $("#usernameFld").val(),
+            phone: $("#phoneFld").val(),
+            email: $("#emailFld").val(),
+            dateOfBirth: $("#dateOfBirthFld").val(),
+            role: $("#roleFld").val()
         };
 
         userService.updateUser(12, user).then(success);
+    }
+
+    function logout() {
+        window.location.href = "../login/login.template.client.html"
+        alert('You have been logged out');
     }
 
     function success(response) {
@@ -30,7 +42,8 @@
             alert('unable to update')
         }
         else {
-            alert('success');
+            findUserById(12);
+            alert('Profile successfully updated');
         }
     }
 
@@ -41,9 +54,11 @@
 
     function renderUser(user) {
         console.log(user);
-        $staticEmail.val(user.username);
-        $firstName.val(user.firstName);
-        $lastName.val(user.lastName);
+        $username.val(user.username);
+        $phone.val(user.phone);
+        $email.val(user.email);
+        $dob.val(user.dateOfBirth);
+        $role.val(user.role);
     }
 
 })();

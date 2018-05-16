@@ -10,10 +10,14 @@ function UserServiceClient() {
         'http://localhost:8080/api/user';
     this.loginURL =
         'http://localhost:8080/api/login';
+    this.registerURL =
+        'http://localhost:8080/api/register';
+    this.profileURL =
+        'http://localhost:8080/api/profile';
     var self = this;
 
     function login(username, password) {
-        return fetch(self.login, {
+        return fetch(self.loginURL, {
             method: 'POST',
             body: JSON.stringify({username: username, password: password}),
             headers: {
@@ -23,7 +27,7 @@ function UserServiceClient() {
     }
 
     function register(username, password) {
-    	return fetch(self.url, {
+    	return fetch(self.registerURL, {
             method: 'POST',
             body: JSON.stringify({username: username, password: password}),
             headers: {
@@ -66,7 +70,27 @@ function UserServiceClient() {
            });
    }
 
+    function updateProfile(userId, user) {
+        console.log("starts");
+        return fetch(self.profileURL + '/' + userId, {
+            method: 'PUT',
+            body: JSON.stringify(user),
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(function(response) {
+            if(response.bodyUsed) {
+                return response.json();
+            }
+            else{
+                return null;
+            }
+
+        });
+    }
+
     function updateUser(userId, user) {
+    	console.log(user);
        return fetch(self.url + '/' + userId, {
            method: 'PUT',
            body: JSON.stringify(user),

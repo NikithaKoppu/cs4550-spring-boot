@@ -12,11 +12,12 @@
 
     }
     function register() {
-        if($passwordFld == $verifyPasswordFld) {
-            userService.register($usernameFld, $passwordFld);
+        if($passwordFld.toString() == $verifyPasswordFld.toString()
+            && userService.register($usernameFld, $passwordFld) != null) {
+        	window.location = "../profile/profile.template.client.html";
         }
     	else {
-            alert('Passwords do not match');
+            alert('Invalid registration');
         }
     }
 })();

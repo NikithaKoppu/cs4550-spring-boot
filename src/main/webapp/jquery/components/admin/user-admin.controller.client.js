@@ -1,6 +1,6 @@
 (function () {
     var $userRowTemplate, $tbody;
-
+    var uId;
     var userService = new UserServiceClient();
     jQuery(main);
 
@@ -46,8 +46,6 @@
             var clone = $userRowTemplate.clone();
             clone.attr('id', user.id);
             
-            clone.find('#remove').click(deleteUser);
-            clone.find('#edit').click(updateUser);
             clone.find('.username')
                 .html(user.username);
             clone.find('.password')
@@ -58,6 +56,9 @@
             .html(user.lastName);
             clone.find('.role')
             .html(user.role);
+
+            clone.find('#remove').click(deleteUser);
+            clone.find('#edit').click(selectUser);
             $tbody.append(clone);
     }
 
@@ -68,8 +69,6 @@
             var clone = $userRowTemplate.clone();
             clone.attr('id', user.id);
 
-            clone.find('#remove').click(deleteUser);
-            clone.find('#edit').click(updateUser);
             clone.find('.username')
                 .html(user.username);
             clone.find('.password')
@@ -80,6 +79,9 @@
             .html(user.lastName);
             clone.find('.role')
             .html(user.role);
+
+            clone.find('#remove').click(deleteUser);
+            clone.find('#edit').click(selectUser);
             $tbody.append(clone);
         }
     }
@@ -90,24 +92,42 @@
         userService.deleteUser(userID)
             .then(findAllUsers);
     }
+    
+    function selectUser(event) {
+    	var updateBtn = $(event.currentTarget);
+        uId = updateBtn.parent().parent().parent().attr('id');
+        console.log(uId);
 
-    function updateUser(event) {
-        var updateBtn = $(event.currentTarget);
-        var userID = updateBtn.parent().parent().parent().attr('id');
-        var username = $('#usernameFld').val();
-        var password = $('#passwordFld').val();
-        var firstName = $('#firstNameFld').val();
-        var lastName = $('#lastNameFld').val();
-        var role = $('#roleFld').val();
+        var username = updateBtn.parent().parent().parent().find(".username").text();
+        console.log(username);
+        var password = updateBtn.parent().parent().parent().find(".password").text();
+        var firstName= updateBtn.parent().parent().parent().find(".first-name").text();
+        var lastName= updateBtn.parent().parent().parent().find(".last-name").text();
+        var role= updateBtn.parent().parent().parent().find(".role").text();
 
-        var user = {
-            username: username,
-            password: password,
-            firstName: firstName,
-            lastName: lastName,
-            role: role
-        };
-        userService.updateUser(userID, user).then(findAllUsers);
+        $('#usernameFld').val(username);
+        console.log($('#usernameFld').val());
+        $('#passwordFld').val(password);
+        $('#firstNameFld').val(firstName);
+        $('#lastNameFld').val(lastName);
+        $('#roleFld').val(role);
+        
+        $(updateUser);
     }
+
+    function updateUser() {
+     
+        $('#updateFinish').click(function () {
+        	var user = {
+                    username: $('#usernameFld').val(),
+                    password: $('#passwordFld').val(),
+                    firstName: $('#firstNameFld').val(),
+                    lastName: $('#lastNameFld').val(),
+                    role: $('#roleFld').val()
+                };
+        	userService.updateUser(uId, user).then(findAllUsers);
+        });
+        }
+     
 
 })();

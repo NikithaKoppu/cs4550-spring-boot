@@ -42,7 +42,7 @@ public class UserService {
 		return user;
 	}
 	
-	@GetMapping("/api.profile")
+	@GetMapping("/api/profile")
 	public User profile(HttpSession session) {
 		User currentUser = (User) session.getAttribute("currentUser");
 		return currentUser;
@@ -85,12 +85,39 @@ public class UserService {
 		 return null;
 	}
 	
+	
+	@PutMapping("/api/profile/{userId}")
+	public User updateProfile(@PathVariable("userId") int userId, @RequestBody User newUser) {
+		Optional<User> data = repository.findById(userId);
+		 if(data.isPresent()) {
+			 User user = data.get();
+			 user.setUsername(newUser.getUsername());
+			 user.setPassword(newUser.getPassword());
+			 user.setFirstName(newUser.getFirstName());
+			 user.setLastName(newUser.getLastName());
+			 user.setRole(newUser.getRole());
+			 user.setEmail(newUser.getEmail());
+			 user.setDateOfBirth(newUser.getDateOfBirth());
+			 user.setPhone(newUser.getPhone());
+			 repository.save(user);
+			 return user;
+		 }
+		 return null;
+	}
+	
 	@PutMapping("/api/user/{userId}")
 	public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
 		Optional<User> data = repository.findById(userId);
 		 if(data.isPresent()) {
 			 User user = data.get();
+			 user.setUsername(newUser.getUsername());
+			 user.setPassword(newUser.getPassword());
 			 user.setFirstName(newUser.getFirstName());
+			 user.setLastName(newUser.getLastName());
+			 user.setRole(newUser.getRole());
+			 user.setEmail(newUser.getEmail());
+			 user.setDateOfBirth(newUser.getDateOfBirth());
+			 user.setPhone(newUser.getPhone());
 			 repository.save(user);
 			 return user;
 		 }

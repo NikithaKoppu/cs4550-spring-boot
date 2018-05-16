@@ -26,25 +26,25 @@ function User(username, password, firstName, lastName, role) {
   function getPassword() {
 	return password;
   }
-  function setPassword(String password) {
+  function setPassword(password) {
 	this.password = password;
   }
   function getFirstName() {
 	 return firstName;
   }
-  function setFirstName(String firstName) {
+  function setFirstName(firstName) {
 	this.firstName = firstName;
   }
   function getLastName() {
 	return lastName;
   }
-  function setLastName(String lastName) {
+  function setLastName(lastName) {
 	this.lastName = lastName;
   }
   function getRole() {
 	return role;
   }
-  function setRole(String role) {
+  function setRole(role) {
 	this.role = role;
   }
 }
