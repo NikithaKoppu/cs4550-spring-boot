@@ -1,23 +1,34 @@
 (function () {
-    var $usernameFld, $passwordFld, $verifyPasswordFld;
-    var $registerBtn;
-    var userService = new UserServiceClient();
-    $("#registerBtn").click(register);
+    var userService;
+    $(main);
 
     function main() {
-    	$usernameFld = $("#usernameFld").val();
-    	$passwordFld = $("#passwordFld").val();
-    	$verifyPasswordFld = $("#verifyPasswordFld").val();
+        userService = new UserServiceClient();
+        $("#registerBtn").click(register);
     }
 
     function register() {
-        $(main);
-        if($passwordFld == $verifyPasswordFld
-            && userService.register($usernameFld, $passwordFld) != null) {
-        	window.location = "../profile/profile.template.client.html";
+        var $usernameFld = $("#usernameFld").val();
+        var $passwordFld = $("#passwordFld").val();
+        var $verifyPasswordFld = $("#verifyPasswordFld").val();
+        console.log($usernameFld);
+        console.log($passwordFld);
+
+        var user = {
+            username: $usernameFld,
+            password: $passwordFld
         }
-    	else {
-            alert('Invalid registration');
+        if($passwordFld == $verifyPasswordFld) {
+            userService.register(user).then(direct, alert('Invalid registration'));
         }
+        else {
+            alert('invalid registration');
+        }
+    }
+
+    function direct() {
+        alert('Valid Login');
+        var user = userService.findUserByUsername($("#usernameFld").val());
+        window.location.href = '../profile/profile.template.client.html?userId=' + user.id;
     }
 })();

@@ -1,6 +1,5 @@
 package com.example.myapp.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +33,15 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/register")
-	public User register(@RequestBody User user, HttpSession session) {
-		if(repository.findUserByUsername(user.getUsername()) == null) {
+	public User register(@RequestBody User user) throws IllegalArgumentException {
+	User data = findUserByUsername(user.getUsername());
+		if(data == null) {
 			createUser(user);
-			session.setAttribute("currentUser", user);
+			return user;
 		}
-		return user;
+		else {
+		    throw new IllegalArgumentException("invalid user details");
+		}
 	}
 	
 	@GetMapping("/api/profile")
@@ -54,22 +56,26 @@ public class UserService {
 	}
  	
 	@PostMapping("/api/login")
-	public User login(@RequestBody User user, HttpSession session) {
-	    System.out.println(user.getUsername())
-		if(repository.findUserByCredentials(user.getUsername(), user.getPassword()) != null) {
-			session.setAttribute("currentUser", user);
-			return user;
-		}
-		return null;
+	public User login(@RequestBody User user) {
+		Optional<User> data = repository.findUserByCredentials(user.getUsername(), user.getPassword());
+			//session.setAttribute("currentUser", user);
+		 if(data.isPresent()) {
+			 return data.get();
+		 }
+		 else {
+		 return null;
+		 }
 	}
 	
-	@GetMapping("/api/register")
+	@GetMapping("/api/register/{username}")
 	public User findUserByUsername(@PathVariable("username") String username) {
 		Optional<User> data = repository.findUserByUsername(username);
 		 if(data.isPresent()) {
 			 return data.get();
 		 }
+		 else {
 		 return null;
+		 }
 	}
 	
 	@GetMapping("/api/user")

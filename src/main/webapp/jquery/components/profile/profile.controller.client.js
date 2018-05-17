@@ -4,6 +4,7 @@
     var $email;
     var $dob;
     var $role;
+    var userId = 12;
     var userService = new UserServiceClient();
 
     $(init);
@@ -18,7 +19,7 @@
         $("#logoutBtn").click(logout);
         $("#updateBtn").click(updateUser);
 
-        findUserById(12);
+        findUserById(userId);
     }
 
     function updateUser() {
@@ -26,14 +27,12 @@
             username: $username.val(),
             phone: $phone.val(),
             email: $email.val(),
-            dateOfBirth: $("#dateOfBirthFld").val(),
-            role: $("#roleFld").val()
+            dateOfBirth: $dob.val(),
+            role: $role.val()
         };
         console.log(user);
 
-        userService.updateUser(12, user).then(function(response){
-            console.log(response);
-        });
+        userService.updateUser(userId, user).then(success);
     }
 
     function logout() {
@@ -42,13 +41,7 @@
     }
 
     function success(response) {
-        if(response == null) {
-            alert('unable to update')
-        }
-        else {
-            findUserById(12);
-            alert('Profile successfully updated');
-        }
+    	response.then(alert('Profile successfully updated'), alert('unable to update'));
     }
 
     function findUserById(userId) {

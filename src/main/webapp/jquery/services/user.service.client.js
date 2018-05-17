@@ -2,6 +2,7 @@ function UserServiceClient() {
     this.createUser = createUser;
     this.findAllUsers = findAllUsers;
     this.findUserById = findUserById;
+    this.findUserByUsername = findUserByUsername;
     this.deleteUser = deleteUser;
     this.updateUser = updateUser;
     this.register = register;
@@ -18,18 +19,21 @@ function UserServiceClient() {
 
     function login(username, password) {
         return fetch(self.loginURL, {
-            method: 'GET',
+            method: 'POST',
             body: JSON.stringify({username: username, password: password}),
             headers: {
                 'content-type': 'application/json'
             }
+        }).then(function(response) {
+                return response.json();
         });
     }
 
-    function register(username, password) {
+    function register(user) {
     	return fetch(self.registerURL, {
             method: 'POST',
-            body: JSON.stringify({username: username, password: password}),
+            credentials: 'same-origin',
+            body: JSON.stringify(user),
             headers: {
                 'content-type': 'application/json'
             }
@@ -39,7 +43,6 @@ function UserServiceClient() {
                 return response.json();
             }
             else{
-                console.log('yert');
                 return null;
             }
         });
@@ -71,6 +74,14 @@ function UserServiceClient() {
             });
     }
 
+    function findUserByUsername(username) {
+        return fetch(
+            self.registerURL + '/' + username)
+            .then(function(response) {
+                return response.json();
+            });
+    }
+
    function findUserById(userId) {
        return fetch(
            self.url + '/' + userId)
@@ -80,7 +91,6 @@ function UserServiceClient() {
    }
 
     function updateUser(userId, user) {
-    	console.log("I AM HERE IN THE CLIENT SERVICE");
        return fetch(self.url + '/' + userId, {
            method: 'PUT',
            body: JSON.stringify(user),
@@ -88,14 +98,7 @@ function UserServiceClient() {
                'content-type': 'application/json'
            }
        }).then(function(response) {
-           if(response.bodyUsed) {
-               console.log("I am responding to u");
-               return response.json();
-           }
-           else{
-               console.log('yert');
-               return null;
-           }
+    	   return response;
        });
    }
 }
