@@ -15,13 +15,12 @@
         $email = $("#emailFld");
         $dob = $("#dateOfBirthFld");
         $role = $("#roleFld");
-        console.log($(getUrlVars()["userId"]));
-        userId = $(getUrlVars()["userId"]);
+        userId = getUrlVars();
 
         $("#logoutBtn").click(logout);
         $("#updateBtn").click(updateUser);
 
-       // findUserById(userId);
+       findUserById(userId);
     }
 
     function updateUser() {
@@ -43,21 +42,21 @@
     }
 
     function success(response) {
-    	response.then(function (value) { alert('Profile successfully updated')},
+    	response.then(function (reason) { alert('Profile successfully updated')},
             function (reason) {  alert('unable to update')});
     }
 
+    //Cited from: https://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url?
+    //				utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     function getUrlVars()
     {
-        var vars = [], hash;
+        var hash;
         var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
         for(var i = 0; i < hashes.length; i++)
         {
             hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
         }
-        return vars;
+        return hash[1];
     }
 
     function findUserById(userId) {
