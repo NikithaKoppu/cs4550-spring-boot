@@ -13,7 +13,17 @@
 	<script src="profile.controller.client.js"></script>
 </head>
 <body>
+
 <div class="container">
+	<div id='alertPass' class="alert alert-success collapse">
+		<a id="linkClosePass" href="#" class="close">&times;</a>
+		<strong>Profile successfully updated.</strong>
+	</div>
+	<div id='alertFail' class="alert alert-danger collapse">
+		<a id="linkCloseFail" href="#" class="close">&times;</a>
+		<strong>Profile Update Failed.</strong>
+	</div>
+
 <h1 id="title">Profile</h1>
 	<form>
 		<div class="form-group row">

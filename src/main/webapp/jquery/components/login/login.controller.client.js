@@ -17,17 +17,22 @@
             .login($usernameFld, $passwordFld)
             .then(direct,
                 function (reason) {
-                    alert("invalid login details")
+                    $('#alertFail').show('fade');
+                    $('#linkCloseFail').click(function() {
+                        $('#alertFail').hide('fade');
+                    });
             });
         }
     
     function direct() {
-        alert('valid login');
+        $('#alertPass').show('fade');
+        $('#linkClosePass').click(function() {
+            $('#alertPass').hide('fade');
+        });
         userService.findUserByUsername($("#usernameFld").val()).then(goToProfile);
     }
     
     function goToProfile(user) {
-    	console.log(user);
     	window.location.href = '../profile/profile.template.client.html?userId=' + user.id;
     }
 })();

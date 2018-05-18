@@ -42,8 +42,18 @@
     }
 
     function success(response) {
-    	response.then(function (reason) { alert('Profile successfully updated')},
-            function (reason) {  alert('unable to update')});
+    	response.then(function (reason) {
+    	        $('#alertPass').show('fade');
+    	        $('#linkClosePass').click(function() {
+                    $('#alertPass').hide('fade');
+                });
+            },
+            function (reason) {
+                $('#alertFail').show('fade');
+                $('#linkCloseFail').click(function() {
+                    $('#alertFail').hide('fade');
+                })
+            });
     }
 
     //Cited from: https://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url?

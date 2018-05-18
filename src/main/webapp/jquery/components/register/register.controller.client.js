@@ -11,8 +11,6 @@
         var $usernameFld = $("#usernameFld").val();
         var $passwordFld = $("#passwordFld").val();
         var $verifyPasswordFld = $("#verifyPasswordFld").val();
-        console.log($usernameFld);
-        console.log($passwordFld);
 
         var user = {
             username: $usernameFld,
@@ -24,21 +22,29 @@
                 .then(
                     direct,
                     function(response) {
-                        alert('User already exists')
+                        $('#alertFail').show('fade');
+                        $('#linkCloseFail').click(function() {
+                            $('#alertFail').hide('fade');
+                        });
                     });
         }
         else {
-            alert('Passwords do not match');
+            $('#alertFailPassword').show('fade');
+            $('#linkCloseFailPass').click(function() {
+                $('#alertFailPassword').hide('fade');
+            });
         }
     }
 
     function direct(response) {
-        alert('valid registration');
+        $('#alertPass').show('fade');
+        $('#linkClosePass').click(function() {
+            $('#alertPass').hide('fade');
+        });
         userService.findUserByUsername($("#usernameFld").val()).then(goToProfile);
     }
 
     function goToProfile(user) {
-        console.log(user);
         window.location.href = '../profile/profile.template.client.html?userId=' + user.id;
     }
 })();
