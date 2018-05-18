@@ -4,7 +4,7 @@
     var $email;
     var $dob;
     var $role;
-    var userId = 12;
+    var userId;
     var userService = new UserServiceClient();
 
     $(init);
@@ -15,11 +15,13 @@
         $email = $("#emailFld");
         $dob = $("#dateOfBirthFld");
         $role = $("#roleFld");
+        console.log($(getUrlVars()["userId"]));
+        userId = $(getUrlVars()["userId"]);
 
         $("#logoutBtn").click(logout);
         $("#updateBtn").click(updateUser);
 
-        findUserById(userId);
+       // findUserById(userId);
     }
 
     function updateUser() {
@@ -41,7 +43,21 @@
     }
 
     function success(response) {
-    	response.then(alert('Profile successfully updated'), alert('unable to update'));
+    	response.then(function (value) { alert('Profile successfully updated')},
+            function (reason) {  alert('unable to update')});
+    }
+
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
     }
 
     function findUserById(userId) {

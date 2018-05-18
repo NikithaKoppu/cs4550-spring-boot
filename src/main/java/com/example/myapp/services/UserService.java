@@ -33,32 +33,20 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/register")
-	public User register(@RequestBody User user) throws IllegalArgumentException {
+	public User register(@RequestBody User user) {
 	User data = findUserByUsername(user.getUsername());
 		if(data == null) {
 			createUser(user);
 			return user;
 		}
 		else {
-		    throw new IllegalArgumentException("invalid user details");
+		    return null;
 		}
-	}
-	
-	@GetMapping("/api/profile")
-	public User profile(HttpSession session) {
-		User currentUser = (User) session.getAttribute("currentUser");
-		return currentUser;
-	}
-	
-	@PostMapping("/api/logout")
-	public void logout(HttpSession session) {
-		session.invalidate();
 	}
  	
 	@PostMapping("/api/login")
 	public User login(@RequestBody User user) {
 		Optional<User> data = repository.findUserByCredentials(user.getUsername(), user.getPassword());
-			//session.setAttribute("currentUser", user);
 		 if(data.isPresent()) {
 			 return data.get();
 		 }

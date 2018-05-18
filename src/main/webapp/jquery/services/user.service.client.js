@@ -13,8 +13,6 @@ function UserServiceClient() {
         'http://localhost:8080/api/login';
     this.registerURL =
         'http://localhost:8080/api/register';
-    this.profileURL =
-        'http://localhost:8080/api/profile';
     var self = this;
 
     function login(username, password) {
@@ -32,19 +30,12 @@ function UserServiceClient() {
     function register(user) {
     	return fetch(self.registerURL, {
             method: 'POST',
-            credentials: 'same-origin',
             body: JSON.stringify(user),
             headers: {
                 'content-type': 'application/json'
             }
         }).then(function(response) {
-            if(response.bodyUsed) {
-                console.log("I am responding to u");
-                return response.json();
-            }
-            else{
-                return null;
-            }
+            return response.json();
         });
     }
     

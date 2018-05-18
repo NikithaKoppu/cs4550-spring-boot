@@ -19,16 +19,26 @@
             password: $passwordFld
         }
         if($passwordFld == $verifyPasswordFld) {
-            userService.register(user).then(direct, alert('Invalid registration'));
+            userService
+                .register(user)
+                .then(
+                    direct,
+                    function(response) {
+                        alert('User already exists')
+                    });
         }
         else {
-            alert('invalid registration');
+            alert('Passwords do not match');
         }
     }
 
-    function direct() {
-        alert('Valid Login');
-        var user = userService.findUserByUsername($("#usernameFld").val());
+    function direct(response) {
+        alert('valid registration');
+        userService.findUserByUsername($("#usernameFld").val()).then(goToProfile);
+    }
+
+    function goToProfile(user) {
+        console.log(user);
         window.location.href = '../profile/profile.template.client.html?userId=' + user.id;
     }
 })();

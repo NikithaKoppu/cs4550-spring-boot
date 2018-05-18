@@ -9,17 +9,25 @@
     }
 
     function login() {
-        console.log('entering login');
+        console.log('entering login')
         var $usernameFld = $("#usernameFld").val();
         var $passwordFld = $("#passwordFld").val();
-        console.log($usernameFld+ " "+ $passwordFld);
 
-        userService.login($usernameFld, $passwordFld).then(direct,
-            alert("invalid login details"));
+        userService
+            .login($usernameFld, $passwordFld)
+            .then(direct,
+                function (reason) {
+                    alert("invalid login details")
+            });
         }
     
     function direct() {
-        var user = userService.findUserByUsername($("#usernameFld").val());
+        alert('valid login');
+        userService.findUserByUsername($("#usernameFld").val()).then(goToProfile);
+    }
+    
+    function goToProfile(user) {
+    	console.log(user);
     	window.location.href = '../profile/profile.template.client.html?userId=' + user.id;
     }
 })();
