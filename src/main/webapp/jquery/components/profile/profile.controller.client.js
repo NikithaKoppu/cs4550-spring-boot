@@ -33,26 +33,25 @@
         };
         console.log(user);
 
-        userService.updateUser(userId, user).then(success);
+        userService.updateUser(userId, user)
+            .then(success,
+                function (response) {
+                    $('#alertFail').show('fade');
+                    $('#linkCloseFail').click(function() {
+                        $('#alertFail').hide('fade');
+                    })
+                });
     }
 
     function logout() {
-        window.location.href = "../login/login.template.client.html"
-        alert('You have been logged out');
+        $('#alertLogout').show();
+        setTimeout(function() {window.location.href = "../login/login.template.client.html"}, 220);
     }
 
     function success(response) {
-    	response.then(function (reason) {
-    	        $('#alertPass').show('fade');
-    	        $('#linkClosePass').click(function() {
-                    $('#alertPass').hide('fade');
-                });
-            },
-            function (reason) {
-                $('#alertFail').show('fade');
-                $('#linkCloseFail').click(function() {
-                    $('#alertFail').hide('fade');
-                })
+            $('#alertPass').show('fade');
+            $('#linkClosePass').click(function() {
+                $('#alertPass').hide('fade');
             });
     }
 
@@ -75,7 +74,6 @@
     }
 
     function renderUser(user) {
-        //console.log(user);
         $username.val(user.username);
         $phone.val(user.phone);
         $email.val(user.email);

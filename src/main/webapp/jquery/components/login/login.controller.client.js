@@ -29,7 +29,9 @@
         $('#linkClosePass').click(function() {
             $('#alertPass').hide('fade');
         });
-        userService.findUserByUsername($("#usernameFld").val()).then(goToProfile);
+        setTimeout(function() {
+        	userService.findUserByUsername($("#usernameFld").val()).then(goToProfile);
+        }, 220);
     }
     
     function goToProfile(user) {
