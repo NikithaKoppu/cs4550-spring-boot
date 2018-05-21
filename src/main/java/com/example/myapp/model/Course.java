@@ -15,12 +15,6 @@ public class Course {
 	private Date created;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modified;
-	public List<Module> getModules() {
-		return modules;
-	}
-	public void setModules(List<Module> modules) {
-		this.modules = modules;
-	}
 	@OneToMany(mappedBy="course")
     private List<Module> modules;
 	
@@ -49,7 +43,12 @@ public class Course {
 		this.modified = modified;
 	}
 	
-	
+	public List<Module> getModules() {
+		return modules;
+	}
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
+	}
 
 }
 
