@@ -56,7 +56,9 @@ public class ModuleService {
 			Course course = data.get();
 			return course.getModules();
 		}
-		return null;		
+		else {
+			return null;
+		}
 	}
 
 
