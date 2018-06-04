@@ -21,6 +21,7 @@ public class Lesson {
   @JsonIgnore
   private Module module;
   @OneToMany(mappedBy="lesson", orphanRemoval=true)
+  @JsonIgnore
   private List<Widget> widgets;
   
 public List<Widget> getWidgets() {
