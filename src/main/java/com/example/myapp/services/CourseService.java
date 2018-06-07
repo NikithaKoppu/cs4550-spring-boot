@@ -1,5 +1,7 @@
 package com.example.myapp.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +19,10 @@ import com.example.myapp.repositories.CourseRepository;
 public class CourseService {
 	@Autowired
 	CourseRepository courseRepository;	
+	
 	@GetMapping("/api/course")
-	public Iterable<Course> findAllCourses() {
-		return courseRepository.findAll(); 
+	public List<Course> findAllCourses() {
+		return (List<Course>) courseRepository.findAll(); 
 	}
 
 	@PostMapping("/api/course")
