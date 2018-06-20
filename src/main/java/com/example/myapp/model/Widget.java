@@ -8,10 +8,16 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DiscriminatorOptions;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorOptions(force=true)
 public class Widget {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -23,6 +29,7 @@ public class Widget {
 	private String link;
 	private int listType;
 	@ManyToOne
+	@JsonIgnore
 	private Lesson lesson;
 	
 	public Lesson getLesson() {
@@ -49,36 +56,30 @@ public class Widget {
 	public void setText(String text) {
 		this.text = text;
 	}
-//	public int getSize() {
-//		return size;
-//	}
-//	public void setSize(int size) {
-//		this.size = size;
-//	}
-//	public String getName() {
-//		return name;
-//	}
-//	public void setName(String name) {
-//		this.name = name;
-//	}
-//	public String getLink() {
-//		return link;
-//	}
-//	public void setLink(String link) {
-//		this.link = link;
-//	}
-//	public int getListType() {
-//		return listType;
-//	}
-//	public void setListType(int listType) {
-//		this.listType = listType;
-//	}
-//	public int getIndex() {
-//		return index;
-//	}
-//	public void setIndex(int index) {
-//		this.index = index;
-//	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
+	}
+	public int getListType() {
+		return listType;
+	}
+	public void setListType(int listType) {
+		this.listType = listType;
+	}
 	
 	
 }

@@ -19,10 +19,11 @@ import com.example.myapp.repositories.LessonRepository;
 import com.example.myapp.repositories.WidgetRepository;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 public class WidgetService {
 	@Autowired
 	WidgetRepository repository;
+	@Autowired
 	LessonRepository lessonRepository;
 	
 	@GetMapping("/api/widget")
@@ -31,7 +32,7 @@ public class WidgetService {
 	}
 	
 	@GetMapping("/api/lesson/{lessonId}/widget")
-	public Iterable<Widget> findWidgetsByLesson(
+	public List<Widget> findWidgetsByLesson(
 			@PathVariable("lessonId") int lessonId) {
 		Optional<Lesson> lData = lessonRepository.findById(lessonId);
 		if(lData.isPresent()) {

@@ -1,6 +1,7 @@
 package com.example.myapp.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +16,7 @@ import com.example.myapp.model.Course;
 import com.example.myapp.repositories.CourseRepository;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 public class CourseService {
 	@Autowired
 	CourseRepository courseRepository;	
@@ -23,6 +24,17 @@ public class CourseService {
 	@GetMapping("/api/course")
 	public List<Course> findAllCourses() {
 		return (List<Course>) courseRepository.findAll(); 
+	}
+	@GetMapping("/api/course/{courseId}")
+	public Course findCourseById(@PathVariable("courseId") int id) {
+		Optional<Course> courses = courseRepository.findById(id);
+		if(courses.isPresent()) {
+			Course course = courses.get();
+			return course;
+		}
+		else {
+			return null;
+		}
 	}
 
 	@PostMapping("/api/course")
